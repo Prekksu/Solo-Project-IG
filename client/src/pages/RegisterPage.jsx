@@ -22,6 +22,7 @@ import { api } from "../api/api";
 
 export default function Registerpage() {
 	const nav = useNavigate();
+
 	const formik = useFormik({
 		initialValues: {
 			email: "",
@@ -43,8 +44,8 @@ export default function Registerpage() {
 			const { email, name, username, password } = formik.values;
 			const account = { email, name, username, password };
 			const checkUser = await api
-				.get("/user", {
-					params: { email: account.email, username: account.username },
+				.get("/Users/login", {
+					params: { emna: account.email, password: account.password },
 				})
 				.then((res) => {
 					if (res.data.length) {
@@ -56,14 +57,15 @@ export default function Registerpage() {
 			if (checkUser) {
 				return alert("email/username already used");
 			} else {
-				await api.post("/user", account).then((res) => {
+				await api.post("/Users/", account).then((res) => {
+					alert("register was successful");
 					nav("/login");
 				});
 			}
 		},
 	});
 
-	function inputHandler(event) {
+	async function inputHandler(event) {
 		const { value, id } = event.target;
 		formik.setFieldValue(id, value);
 	}
@@ -143,8 +145,6 @@ export default function Registerpage() {
 									id="email"
 									onChange={inputHandler}
 									type="email"
-									required
-									oninvalid="this.setCustomValidity('User ID is a must')"
 								/>
 							</InputGroup>
 							<InputGroup w={"270px"} h={"38px"}>

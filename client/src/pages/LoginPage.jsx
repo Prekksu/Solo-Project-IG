@@ -9,12 +9,49 @@ import {
 	Flex,
 	Icon,
 	Image,
+	useToast,
 	Input,
 } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 import { AiFillFacebook } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../redux/midllewares/userauth";
 
 export default function Loginpage() {
+	const dispatch = useDispatch();
+	const nav = useNavigate();
+	const toast = useToast();
+	const [account, setAccount] = useState({
+		emna: "",
+		password: "",
+	});
+
+	async function onSubmit() {
+		toast.closeAll();
+		const status = await dispatch(userLogin(account));
+		if (status) {
+			toast({
+				title: "You are successfully logged in",
+				status: "success",
+				isClosable: true,
+			});
+			return nav("/");
+		}
+		return toast({
+			title: "wrong email/password",
+			status: "error",
+			duration: 9000,
+			isClosable: true,
+		});
+	}
+
+	async function inputHandler(event) {
+		const { value, id } = event.target;
+		const tempObj = { ...account };
+		tempObj[id] = value;
+		setAccount(tempObj);
+	}
 	return (
 		<>
 			<Center h={"100vh"}>
@@ -32,13 +69,19 @@ export default function Loginpage() {
 								h={"38px"}
 								fontSize={"11px"}
 								placeholder="Phone number, username or email address"
+								value={account.emna}
+								id="emna"
+								onChange={inputHandler}
 							/>
 							<Input
 								w={"270px"}
 								h={"38px"}
 								fontSize={"11px"}
 								placeholder="Password"
-								type="password"
+								id="password"
+								type={"password"}
+								value={account.password}
+								onChange={inputHandler}
 							/>
 							<Button
 								w={"270px"}
@@ -47,6 +90,7 @@ export default function Loginpage() {
 								color={"white"}
 								fontSize={"14px"}
 								borderRadius={"10px"}
+								onClick={onSubmit}
 							>
 								Log in
 							</Button>
