@@ -15,8 +15,8 @@ export default function Content() {
 					// h={"700px"}
 					borderBottom={"1px"}
 					borderColor={"#E4E4E4"}
-					paddingTop={"20px"}
-					paddingBottom={"20px"}
+					paddingTop={"15px"}
+					paddingBottom={"15px"}
 				>
 					{/* profile */}
 					<Box
