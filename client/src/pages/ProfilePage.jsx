@@ -32,6 +32,22 @@ export default function Profilepage() {
 	}
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+    async function onSubmit() {
+        const formData = new FormData();
+        formData.append("avatar", selectedFile);
+    
+        await api
+          .patch("/user/" + userSelector.id, { ...formData, ...profile })
+          .then((res) => {
+            console.log(res.data);
+            dispatch({
+              type: "login",
+              payload: res.data,
+            });
+            onClose();
+          });
+      }
 	return (
 		<>
 			{/* <Center
