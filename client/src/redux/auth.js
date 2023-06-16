@@ -16,6 +16,7 @@ function userReducer(state = init, action) {
 	} else {
 		return init;
 	}
+	return state;
 }
 
 export default userReducer;

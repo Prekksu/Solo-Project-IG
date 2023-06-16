@@ -11,7 +11,7 @@ const db = require("./models");
 // db.sequelize.sync({ alter: true });
 // db.sequelize.sync({ force: true });
 
-app.use("/Users", router.userRouter);
+app.use("/user", router.userRouter);
 
 app.listen(PORT, () => {
 	console.log(`server is running on PORT ${PORT}`);

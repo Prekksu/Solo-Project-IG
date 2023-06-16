@@ -29,7 +29,6 @@ export default function Registerpage() {
 			name: "",
 			username: "",
 			password: "",
-			password2: "",
 		},
 		validationSchema: Yup.object().shape({
 			email: Yup.string().required().email(),
@@ -44,7 +43,7 @@ export default function Registerpage() {
 			const { email, name, username, password } = formik.values;
 			const account = { email, name, username, password };
 			const checkUser = await api
-				.get("/Users/login", {
+				.get("/user/login", {
 					params: { emna: account.email, password: account.password },
 				})
 				.then((res) => {
@@ -57,7 +56,7 @@ export default function Registerpage() {
 			if (checkUser) {
 				return alert("email/username already used");
 			} else {
-				await api.post("/Users/", account).then((res) => {
+				await api.post("/user/", account).then((res) => {
 					alert("register was successful");
 					nav("/login");
 				});

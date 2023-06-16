@@ -4,6 +4,7 @@ import Registerpage from "../pages/RegisterPage";
 import Homepage from "../pages/HomePage";
 import Profilepage from "../pages/ProfilePage";
 import ProtectedPage from "./protectedpage";
+import Forgetpage from "../pages/ForgetPage";
 
 const routes = [
 	<Route
@@ -35,6 +36,14 @@ const routes = [
 		element={
 			<ProtectedPage guestOnly={false} needLogin={true}>
 				<Profilepage />
+			</ProtectedPage>
+		}
+	></Route>,
+	<Route
+		path="/forget/:token"
+		element={
+			<ProtectedPage guestOnly={false} needLogin={false}>
+				<Forgetpage />
 			</ProtectedPage>
 		}
 	></Route>,

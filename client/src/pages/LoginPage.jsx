@@ -122,9 +122,15 @@ export default function Loginpage() {
 								<Icon fontSize={"23px"} as={AiFillFacebook} />
 								<Flex>Log in with Facebook</Flex>
 							</Flex>
-							<Flex fontSize={"12px"} color={"#304482"} paddingBottom={"45px"}>
-								Forgotten your password?
-							</Flex>
+							<Link to={"/forget/:token"}>
+								<Flex
+									fontSize={"12px"}
+									color={"#304482"}
+									paddingBottom={"45px"}
+								>
+									Forgotten your password?
+								</Flex>
+							</Link>
 						</Center>
 						<Center gap={"5px"} paddingBottom={"45px"} fontSize={"14px"}>
 							<Flex>Don't have an account?</Flex>

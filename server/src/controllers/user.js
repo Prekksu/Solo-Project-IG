@@ -13,17 +13,30 @@ const userController = {
 	register: async (req, res) => {
 		try {
 			const { email, name, username, password } = req.body;
-			const hashPassword = await bcrypt.hash(password, 10);
+			const checker1 = await db.User.findOne({ where: { email } });
+			const checker2 = await db.User.findOne({ where: { username } });
+			if (!checker1?.dataValues?.id && !checker2?.dataValues?.id) {
+				const hashPassword = await bcrypt.hash(password, 10);
 
-			await db.User.create({
-				email,
-				name,
-				username,
-				password: hashPassword,
-			});
-			return await db.User.findAll().then((result) => {
-				res.send(result);
-			});
+				await db.User.create({
+					name,
+					username,
+					email,
+					password: hashPassword,
+				}).then(() => {
+					res.send({
+						message: "your register was successful",
+					});
+				});
+			} else if (checker1?.dataValues?.id) {
+				res.send({
+					message: `user with email ${email} already exist`,
+				});
+			} else if (checker2?.dataValues?.id) {
+				res.send({
+					message: `user with username ${username} already exist`,
+				});
+			}
 		} catch (err) {
 			return res.status(500).send({
 				message: err.message,
@@ -37,30 +50,23 @@ const userController = {
 				where: {
 					[Op.and]: [
 						{
-							email: emna,
+							username: emna,
 						},
 						{
-							username: emna,
+							email: emna,
 						},
 					],
 				},
 			});
-
-			console.log(user);
 			if (user) {
 				const match = await bcrypt.compare(password, user.dataValues.password);
-				console.log(match);
-				console.log(user.dataValues);
 				if (match) {
 					const payload = {
 						id: user.dataValues.id,
 					};
-
-					const generateToken = nanoid();
-
 					const token = await db.Token.create({
 						expired: moment().add(1, "days").format(),
-						token: generateToken,
+						token: nanoid(),
 						payload: JSON.stringify(payload),
 						valid: true,
 					});
@@ -84,11 +90,9 @@ const userController = {
 		}
 	},
 	getByToken: async (req, res, next) => {
-		console.log("masuk sini");
 		try {
 			let token = req.headers.authorization;
 			token = token.split(" ")[1];
-			console.log(req.headers.authorization);
 			let p = await db.Token.findOne({
 				where: {
 					[Op.and]: [
@@ -104,9 +108,11 @@ const userController = {
 					],
 				},
 			});
+			console.log(moment().format());
 			if (!p) {
 				throw new Error("token has expired");
 			}
+			console.log(p.dataValues);
 			user = await db.User.findOne({
 				where: {
 					id: JSON.parse(p?.dataValues?.payload).id,
@@ -115,9 +121,9 @@ const userController = {
 			delete user.dataValues.password;
 			req.user = user;
 			next();
-		} catch (error) {
+		} catch (err) {
 			res.status(500).send({
-				message: error.message,
+				message: err.message,
 			});
 		}
 	},
@@ -158,13 +164,13 @@ const userController = {
 				});
 
 				await mailer({
-					subject: "hello",
-					to: "",
-					text: url + generateToken,
+					subject: "Reset Password",
+					to: user.dataValues.email,
+					text: url_pass + generateToken,
 				});
 
 				return res.send({
-					message: "silahkan check email anda",
+					message: "please check your email",
 				});
 			}
 		} catch (err) {

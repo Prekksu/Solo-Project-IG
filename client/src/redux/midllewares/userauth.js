@@ -5,7 +5,7 @@ export function userLogin(account) {
 	return async function (dispatch) {
 		try {
 			const token = await api
-				.get("/Users/login", {
+				.get("/user/login", {
 					params: {
 						emna: account.emna,
 						password: account.password,
@@ -13,7 +13,7 @@ export function userLogin(account) {
 				})
 				.then((res) => res.data.token);
 			const userData = await api
-				.get("/Users/token", {
+				.get("/user/token", {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
