@@ -70,7 +70,6 @@ export default function Loginpage() {
 								h={"38px"}
 								fontSize={"11px"}
 								placeholder="Phone number, username or email address"
-								// value={account.emna} // hapus aja?
 								id="emna"
 								onChange={inputHandler}
 							/>
@@ -81,7 +80,6 @@ export default function Loginpage() {
 								placeholder="Password"
 								id="password"
 								type={"password"}
-								// value={account.password} //ga perlu
 								onChange={inputHandler}
 							/>
 							<Button
