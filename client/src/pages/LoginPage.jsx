@@ -28,6 +28,7 @@ export default function Loginpage() {
 	});
 
 	async function onSubmit() {
+		//blm ada API loginnya?
 		toast.closeAll();
 		const status = await dispatch(userLogin(account));
 		if (status) {
@@ -69,7 +70,7 @@ export default function Loginpage() {
 								h={"38px"}
 								fontSize={"11px"}
 								placeholder="Phone number, username or email address"
-								value={account.emna}
+								// value={account.emna} // hapus aja?
 								id="emna"
 								onChange={inputHandler}
 							/>
@@ -80,7 +81,7 @@ export default function Loginpage() {
 								placeholder="Password"
 								id="password"
 								type={"password"}
-								value={account.password}
+								// value={account.password} //ga perlu
 								onChange={inputHandler}
 							/>
 							<Button

@@ -8,7 +8,7 @@ router.get("/login", userController.login);
 router.get("/forgetPass", userController.forgetPass); // login by email & generate nanoid
 router.get("/token", userController.getByToken, userController.getUserByToken);
 router.patch(
-	"/token2/changePass",
+	"/token/changePass",
 	userController.getByToken,
 	userController.changePass
 );

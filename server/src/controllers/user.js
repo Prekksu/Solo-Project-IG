@@ -44,11 +44,13 @@ const userController = {
 		}
 	},
 	login: async (req, res) => {
+		//login pakai ini
 		try {
+			console.log(req.query);
 			const { emna, password } = req.query;
 			const user = await db.User.findOne({
 				where: {
-					[Op.and]: [
+					[Op.or]: [
 						{
 							username: emna,
 						},
@@ -73,7 +75,7 @@ const userController = {
 					return res.send({
 						message: "login berhasil",
 						value: user,
-						token: token.dataValues.token,
+						token: token.dataValues.token, // copas tokennya
 					});
 				} else {
 					throw new Error("login gagal");
