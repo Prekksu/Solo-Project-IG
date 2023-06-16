@@ -49,5 +49,6 @@ db.Sequelize = Sequelize;
 
 db.Token = require("./token")(sequelize, Sequelize);
 db.User = require("./user")(sequelize, Sequelize);
+db.Post = require("./post")(sequelize, Sequelize);
 
 module.exports = db;

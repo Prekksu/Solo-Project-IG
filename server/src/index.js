@@ -12,6 +12,7 @@ const db = require("./models");
 // db.sequelize.sync({ force: true });
 
 app.use("/user", router.userRouter);
+app.use("/post", router.postRouter);
 
 app.listen(PORT, () => {
 	console.log(`server is running on PORT ${PORT}`);

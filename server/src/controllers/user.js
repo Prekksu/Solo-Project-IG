@@ -91,6 +91,17 @@ const userController = {
 			});
 		}
 	},
+	editUser: async (req, res) => {
+		try {
+			const { name, username, bio } = req.body;
+			const { id } = req.params;
+		} catch (err) {
+			console.log(err);
+			return res.status(500).send({
+				message: err.message,
+			});
+		}
+	},
 	getByToken: async (req, res, next) => {
 		try {
 			let token = req.headers.authorization;

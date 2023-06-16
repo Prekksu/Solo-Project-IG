@@ -61,7 +61,7 @@ export default function Navbar() {
 									fontSize="24px"
 									padding={"24px"}
 								>
-									<Flex fontWeight={"bold"}>Edit product details</Flex>
+									<Flex fontWeight={"bold"}>Create new post</Flex>
 									<Flex alignItems={"end"}>
 										<Icon
 											as={IoMdClose}
@@ -85,25 +85,13 @@ export default function Navbar() {
 										<Button fontWeight={"hairline"}>Change photo</Button>
 									</Flex>
 									<Flex flexDir={"column"} gap={"10px"}>
-										<Input
-											w="280px"
-											h="40px"
-											placeholder="Product name"
-											id="name"
-										></Input>
 										<Textarea
 											w="280px"
 											h="40px"
-											placeholder="Product description"
+											placeholder="Caption"
 											resize={"none"}
 											id="desc"
 										></Textarea>
-										<Input
-											w="280px"
-											h="40px"
-											placeholder="Price"
-											id="price"
-										></Input>
 									</Flex>
 								</Flex>
 
